@@ -1,0 +1,35 @@
+// Best First Search
+
+from queue import PriorityQueue
+
+def best_first_search(graph, start, goal):
+    visited = set()
+    pq = PriorityQueue()
+    pq.put((0, start))
+    
+    while not pq.empty():
+        cost, node = pq.get()
+        if node == goal:
+            return visited
+        visited.add(node)
+        for neighbor, neighbor_cost in graph[node]:
+            if neighbor not in visited:
+                pq.put((neighbor_cost, neighbor))
+    
+    return visited
+
+# Example usage
+graph = {
+    'A': [('B', 2), ('C', 1)],
+    'B': [('D', 5)],
+    'C': [('D', 3)],
+    'D': [('E', 4)],
+    'E': []
+}
+
+start = 'A'
+goal = 'E'
+
+visited = best_first_search(graph, start, goal)
+
+print("Visited nodes:", visited)
